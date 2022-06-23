@@ -1,9 +1,7 @@
-import pickle
-from flask import Flask, request, render_template
 import pandas as pd
-import numpy as np
+import pickle
+import streamlit as st
 
-app = Flask(__name__, static_url_path='/static')
 pipeline = pickle.load(open('app/../models/pipeline.pkl', 'rb'))
 
 columns = ['BMI', 'Smoking', 'AlcoholDrinking', 'Stroke', 'PhysicalHealth',
@@ -12,26 +10,11 @@ columns = ['BMI', 'Smoking', 'AlcoholDrinking', 'Stroke', 'PhysicalHealth',
            'SkinCancer']
 
 
-@app.route('/')
-def display():
-    return render_template('index.html')
+def predict_disease(inputs):
+    values = []
 
-
-@app.route('/predict/', methods=['POST'])
-def predict():
-    data = request.form.to_dict()
-    inputs = list()
-    for x in data.values():
-        if x.isnumeric() == True:
-            x = float(x)
-        else:
-            pass
-
-        inputs.append(x)
-
-    values = list()
     for i, j in enumerate(inputs):
-        i = list()
+        i = []
         i.append(j)
         values.append(i)
 
@@ -41,13 +24,51 @@ def predict():
     prediction = pipeline.predict(df)
     probability = pipeline.predict_proba(df)
 
-    if prediction[0] != 0:
-        result = f'Result: You probably have heart disease. Probability = {(probability[0][1] * 100):.2f}%'
-        return render_template("index.html", result=result)
+    if prediction[0] == 0:
+        return f'Result: You probably do not have heart disease. Probability = {(probability[0][1] * 100):.2f}%'
     else:
-        result = f'Result: You probably do not have heart disease. Probability = {(probability[0][1] * 100):.2f}%'
-        return render_template("index.html", result=result)
+        return f'Result: You probably have heart disease. Probability = {(probability[0][1] * 100):.2f}%'
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+def main():
+    st.title('Heart Disease Prediction App')
+
+    BMI = st.number_input("Body Mass Index (BMI)", 0.00, 100.00)
+    Smoking = st.radio("Have you smoked at least 100 cigarettes in your entire life?", ("No", "Yes"))
+    AlcoholDrinking = st.radio(
+        "Are you a heavy drinker? [Male - more than 14 drinks/week / Female - more than 7 drinks/week]", ("No", "Yes"))
+    Stroke = st.radio("Had you a stroke?", ("No", "Yes"))
+    PhysicalHealth = st.number_input("How many days during the past 30 days was your physical health not good?", 0, 30)
+    MentalHealth = st.number_input("How many days during the past 30 days was your mental health not good?", 0, 30)
+    DiffWalking = st.radio("Do you have serious difficulty walking or climbing stairs?", ("No", "Yes"))
+    Sex = st.radio("Are you male or female?", ("Male", "Female"))
+    AgeCategory = st.radio("Select your age category:", (
+        "18-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", "70-74", "75-79",
+        "80 or older"))
+    Race = st.radio("Select one of them below:",
+                    ("American Indian/Alaskan Native", "Asian", "Black", "Hispanic", "White", "Other"))
+    Diabetic = st.radio("Do you have diabetes?", ("No", "No, borderline diabetes", "Yes", "Yes (during pregnancy)"))
+    PhysicalActivity = st.radio(
+        "Did you do any physical activity or exercise during the past 30 days other than their regular job?",
+        ("No", "Yes"))
+    GenHealth = st.radio("Would you say that in general your health is...",
+                         ("Poor", "Fair", "Good", "Very good", "Excellent"))
+    SleepTime = st.number_input("On average, how many hours of sleep do you get in a 24-hour period?", 0, 24)
+    Asthma = st.radio("Do you have asthma?", ("No", "Yes"))
+    KidneyDisease = st.radio(
+        "Not including kidney stones, bladder infection or incontinence, were you ever told you had kidney disease?",
+        ("No", "Yes"))
+    SkinCancer = st.radio("Have/Had you skin cancer?", ("No", "Yes"))
+
+    diagnosis = ''
+
+    if st.button('Heart Disease Test Result'):
+        diagnosis = predict_disease(
+            [BMI, Smoking, AlcoholDrinking, Stroke, PhysicalHealth, MentalHealth, DiffWalking, Sex, AgeCategory,
+             Race, Diabetic, PhysicalActivity, GenHealth, SleepTime, Asthma, KidneyDisease, SkinCancer])
+
+        st.success(diagnosis)
+
+
+if __name__ == '__main__':
+    main()
