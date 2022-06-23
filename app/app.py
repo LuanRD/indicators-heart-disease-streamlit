@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 app = Flask(__name__, static_url_path='/static')
-pipeline = pickle.load(open('../models/pipeline.pkl', 'rb'))
+pipeline = pickle.load(open('app/../models/pipeline.pkl', 'rb'))
 
 columns = ['BMI', 'Smoking', 'AlcoholDrinking', 'Stroke', 'PhysicalHealth',
            'MentalHealth', 'DiffWalking', 'Sex', 'AgeCategory', 'Race', 'Diabetic',
@@ -14,7 +14,7 @@ columns = ['BMI', 'Smoking', 'AlcoholDrinking', 'Stroke', 'PhysicalHealth',
 
 @app.route('/')
 def display():
-    return render_template('app/index.html')
+    return render_template('index.html')
 
 
 @app.route('/predict/', methods=['POST'])
@@ -50,4 +50,4 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(debug=True)
