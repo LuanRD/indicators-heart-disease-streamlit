@@ -35,7 +35,15 @@ def main():
 
     st.subheader("This application was created based on data provided by the American CDC in an annual survey. From these data, a Machine Learning model was created that sought to predict people's heart health from personal information. This project does not is intended to be scientific.", anchor=None)
 
-    BMI = st.number_input("Body Mass Index (BMI)", 0.00, 100.00)
+    Sex = st.radio("Are you male or female?", ("Male", "Female"))
+    Race = st.radio("Select one of them below:",
+                    ("American Indian/Alaskan Native", "Asian", "Black", "Hispanic", "White", "Other"))
+    AgeCategory = st.radio("Select your age category:", (
+        "18-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", "70-74", "75-79",
+        "80 or older"))                    
+    Height = st.number_input("Insert your height (m)", 0.01, 2.10)
+    Weight = st.number_input("Insert your weight (kg)", 0.01, 300.00)
+    BMI = Weight/(Height**2)
     Smoking = st.radio("Have you smoked at least 100 cigarettes in your entire life?", ("No", "Yes"))
     AlcoholDrinking = st.radio(
         "Are you a heavy drinker? [Male - more than 14 drinks/week / Female - more than 7 drinks/week]", ("No", "Yes"))
@@ -43,12 +51,6 @@ def main():
     PhysicalHealth = st.number_input("How many days during the past 30 days was your physical health not good?", 0, 30)
     MentalHealth = st.number_input("How many days during the past 30 days was your mental health not good?", 0, 30)
     DiffWalking = st.radio("Do you have serious difficulty walking or climbing stairs?", ("No", "Yes"))
-    Sex = st.radio("Are you male or female?", ("Male", "Female"))
-    AgeCategory = st.radio("Select your age category:", (
-        "18-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", "70-74", "75-79",
-        "80 or older"))
-    Race = st.radio("Select one of them below:",
-                    ("American Indian/Alaskan Native", "Asian", "Black", "Hispanic", "White", "Other"))
     Diabetic = st.radio("Do you have diabetes?", ("No", "No, borderline diabetes", "Yes", "Yes (during pregnancy)"))
     PhysicalActivity = st.radio(
         "Did you do any physical activity or exercise during the past 30 days other than their regular job?",
