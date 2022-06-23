@@ -33,6 +33,8 @@ def predict_disease(inputs):
 def main():
     st.title('Heart Disease Prediction App')
 
+    st.subheader("This application was created based on data provided by the American CDC in an annual survey. From these data, a Machine Learning model was created that sought to predict people's heart health from personal information. This project does not is intended to be scientific.", anchor=None)
+
     BMI = st.number_input("Body Mass Index (BMI)", 0.00, 100.00)
     Smoking = st.radio("Have you smoked at least 100 cigarettes in your entire life?", ("No", "Yes"))
     AlcoholDrinking = st.radio(
