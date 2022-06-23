@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+<head>
+    <title>Heart Disease Prediction</title>
+</head>
+        <body>
+        <h1>Heart Disease Test</h1>
+        <form action="{{ url_for('predict') }}" method="POST">
+            <label for="BMI">Body Mass Index (BMI)</label>
+            <br>
+            <input type="text" id="BMI" name="BMI">
+            <br>
+            <br>
+            <p>Have you smoked at least 100 cigarettes in your entire life?</p>
+            <input type="radio" id="No_smk" name="Smoking" value="No">
+            <label for="No_smk">No</label>
+            <input type="radio" id="Yes_smk" name="Smoking" value="Yes">
+            <label for="Yes_smk">Yes</label>
+            <br>
+            <br>
+            <p>Are you a heavy drinker? [Male - more than 14 drinks/week | Female - more than 7 drinks/week]</p>
+            <input type="radio" id="No_alc" name="AlcoholDrinking" value="No">
+            <label for="No_alc">No</label>
+            <input type="radio" id="Yes_alc" name="AlcoholDrinking" value="Yes">
+            <label for="Yes_alc">Yes</label>
+            <br>
+            <br>
+            <p>Had you a stroke?</p>
+            <input type="radio" id="No_str" name="Stroke" value="No">
+            <label for="No_str">No</label>
+            <input type="radio" id="Yes_str" name="Stroke" value="Yes">
+            <label for="Yes_str">Yes</label>
+            <br>
+            <br>
+            <label for="PhysicalHealth">How many days during the past 30 days was your physical health not good? (0-30)</label>
+            <br>
+            <input type="text" id="PhysicalHealth" name="PhysicalHealth">
+            <br>
+            <br>
+            <label for="MentalHealth">How many days during the past 30 days was your mental health not good? (0-30)</label>
+            <br>
+            <input type="text" id="MentalHealth" name="MentalHealth">
+            <br>
+            <br>
+            <p>Do you have serious difficulty walking or climbing stairs?</p>
+            <input type="radio" id="No_wal" name="DiffWalking" value="No">
+            <label for="No_str">No</label>
+            <input type="radio" id="Yes_wal" name="DiffWalking" value="Yes">
+            <label for="Yes_str">Yes</label>
+            <br>
+            <br>
+            <p>Are you male or female?</p>
+            <input type="radio" id="Male" name="Sex" value="Male">
+            <label for="Male">Male</label>
+            <input type="radio" id="Female" name="Sex" value="Female">
+            <label for="Female">Female</label>
+            <br>
+            <br>
+            <p>Select your age category:</p>
+            <input type="radio" id="18-24" name="AgeCategory" value="18-24">
+            <label for="18-24">18-24</label>
+            <input type="radio" id="25-29" name="AgeCategory" value="25-29">
+            <label for="25-29">25-29</label>
+            <input type="radio" id="30-34" name="AgeCategory" value="30-34">
+            <label for="30-34">30-34</label>
+            <input type="radio" id="35-39" name="AgeCategory" value="35-39">
+            <label for="35-39">35-39</label>
+            <input type="radio" id="40-44" name="AgeCategory" value="40-44">
+            <label for="40-44">40-44</label>
+            <input type="radio" id="45-49" name="AgeCategory" value="45-49">
+            <label for="45-49">45-49</label>
+            <input type="radio" id="50-54" name="AgeCategory" value="50-54">
+            <label for="50-54">50-54</label>
+            <input type="radio" id="55-59" name="AgeCategory" value="55-59">
+            <label for="55-59">55-59</label>
+            <input type="radio" id="60-64" name="AgeCategory" value="60-64">
+            <label for="60-64">60-64</label>
+            <input type="radio" id="65-69" name="AgeCategory" value="65-69">
+            <label for="65-69">65-69</label>
+            <input type="radio" id="70-74" name="AgeCategory" value="70-74">
+            <label for="70-74">70-74</label>
+            <input type="radio" id="75-79" name="AgeCategory" value="75-79">
+            <label for="75-79">75-79</label>
+            <input type="radio" id="80 or older" name="AgeCategory" value="80 or older">
+            <label for="80 or older">80 or older</label>
+            <br>
+            <br>
+            <p>Select one of them below:</p>
+            <input type="radio" id="American Indian/Alaskan Native" name="Race" value="American Indian/Alaskan Native">
+            <label for="American Indian/Alaskan Native">American Indian/Alaskan Native</label>
+            <input type="radio" id="Asian" name="Race" value="Asian">
+            <label for="Asian">Asian</label>
+            <input type="radio" id="Black" name="Race" value="Black">
+            <label for="Black">Black</label>
+            <input type="radio" id="Hispanic" name="Race" value="Hispanic">
+            <label for="Hispanic">Hispanic</label>
+            <input type="radio" id="White" name="Race" value="White">
+            <label for="White">White</label>
+            <input type="radio" id="Other" name="Race" value="Other">
+            <label for="Other">Other</label>
+            <br>
+            <br>
+            <p>Do you have diabetes?</p>
+            <input type="radio" id="No_dbt" name="Diabetic" value="No">
+            <label for="No_dbt">No</label>
+            <input type="radio" id="No_dbt_1" name="Diabetic" value="No, borderline diabetes">
+            <label for="No_dbt_1">No, borderline diabetes</label>
+            <input type="radio" id="Yes_dbt" name="Diabetic" value="Yes">
+            <label for="Yes_dbt">Yes</label>
+            <input type="radio" id="Yes_dbt_pgn" name="Diabetic" value="Yes (during pregnancy)">
+            <label for="Yes_dbt_pgn">Yes (during pregnancy)</label>
+            <br>
+            <br>
+            <p>Did you do any physical activity or exercise during the past 30 days other than their regular job?</p>
+            <input type="radio" id="No_phy" name="PhysicalActivity" value="No">
+            <label for="No_phy">No</label>
+            <input type="radio" id="Yes_phy" name="PhysicalActivity" value="Yes">
+            <label for="Yes_phy">Yes</label>
+            <br>
+            <br>
+            <p>Would you say that in general your health is:</p>
+            <input type="radio" id="Poor" name="GenHealth" value="Poor">
+            <label for="Poor">Poor</label>
+            <input type="radio" id="Fair" name="GenHealth" value="Fair">
+            <label for="Fair">Fair</label>
+            <input type="radio" id="Good" name="GenHealth" value="Good">
+            <label for="Good">Good</label>
+            <input type="radio" id="Very good" name="GenHealth" value="Very good">
+            <label for="Very good">Very good</label>
+            <input type="radio" id="Excellent" name="GenHealth" value="Excellent">
+            <label for="Excellent">Excellent</label>
+            <br>
+            <br>
+            <label for="SleepTime">On average, how many hours of sleep do you get in a 24-hour period? (0-24)</label>
+            <br>
+            <input type="text" id="SleepTime" name="SleepTime">
+            <br>
+            <br>
+            <p>Do you have asthma?</p>
+            <input type="radio" id="No_asm" name="Asthma" value="No">
+            <label for="No_asm">No</label>
+            <input type="radio" id="Yes_asm" name="Asthma" value="Yes">
+            <label for="Yes_asm">Yes</label>
+            <br>
+            <br>
+            <p>Not including kidney stones, bladder infection or incontinence, were you ever told you had kidney disease?</p>
+            <input type="radio" id="No_kid" name="KidneyDisease" value="No">
+            <label for="No_kid">No</label>
+            <input type="radio" id="Yes_kid" name="KidneyDisease" value="Yes">
+            <label for="Yes_kid">Yes</label>
+            <br>
+            <br>
+            <p>Have/Had you skin cancer?</p>
+            <input type="radio" id="No_skn" name="SkinCancer" value="No">
+            <label for="No_skn">No</label>
+            <input type="radio" id="Yes_skn" name="SkinCancer" value="Yes">
+            <label for="Yes_skn">Yes</label>
+            <br>
+            <br>
+            <button type="submit" value="Submit">Predict</button>
+        </form>
+
+        <br>
+        <br>
+        <br>
+        {{ result }}
+</body>
+</html>
