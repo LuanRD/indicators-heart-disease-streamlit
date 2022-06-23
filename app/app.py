@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 app = Flask(__name__, static_url_path='/static')
-pipeline = pickle.load(open('../../models/pipeline.pkl', 'rb'))
+pipeline = pickle.load(open('../models/pipeline.pkl', 'rb'))
 
 columns = ['BMI', 'Smoking', 'AlcoholDrinking', 'Stroke', 'PhysicalHealth',
            'MentalHealth', 'DiffWalking', 'Sex', 'AgeCategory', 'Race', 'Diabetic',
