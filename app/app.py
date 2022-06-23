@@ -14,7 +14,7 @@ columns = ['BMI', 'Smoking', 'AlcoholDrinking', 'Stroke', 'PhysicalHealth',
 
 @app.route('/')
 def display():
-    return render_template('index.html')
+    return render_template('app/index.html')
 
 
 @app.route('/predict/', methods=['POST'])
